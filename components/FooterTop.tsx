@@ -48,7 +48,7 @@ const ContactItem = ({icon,title,subtitle}: Props) => {
     {icon}
     <div className='font-semibold text-gray-900 group-hover:text-darkColor transition-colors'>
       <h3>{title}</h3>
-      <p>{subtitle}</p>
+      <p className='text-gray-600 text-sm mt-1 group-hover:text-gray-900 transition-colors'>{subtitle}</p>
     </div>
     </div>
 }
