@@ -15,3 +15,11 @@ export const productType=[
     {title:'Hoodie', value:'hoodie'},
     {title:'Short', value:'tshirt'},
 ];
+
+export const quicklLinksData=[
+    {title:'About us', href:'/about'},
+    {title:'Contact us', href:'/contact'},
+    {title:'Terms & Conditions', href:'/terms'},
+    {title:'Privacy Policy', href:'/privacy'},
+    {title:'FAQs', href:'/faqs'},
+];
