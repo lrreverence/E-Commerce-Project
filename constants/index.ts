@@ -32,4 +32,4 @@ export const categoriesData = [
     {title:'Accessories', href:'/accessories'},
     {title:'Household', href:'/household'},
     {title:'Others', href:'/others'},
-]
+];

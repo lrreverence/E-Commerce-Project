@@ -4,6 +4,9 @@ import FooterTop from './FooterTop'
 import Logo from './Logo'
 import SocialMedia from './SocialMedia'
 import { Input } from './ui/input'
+import { categoriesData, quicklLinksData } from '@/constants'
+import Link from 'next/link'
+
 
 const Footer = () => {
   return (
@@ -16,8 +19,26 @@ const Footer = () => {
               <p className='text-gray-600 text-sm'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat, incidunt blanditiis.</p>
               <SocialMedia className='text-darkColor/60' iconClassName='border-darkColor/60 hover:border-darkColor hover:text-darkColor' tooltipClassName='bg-darkColor text-white'/>
             </div>
-            <div></div>
-            <div></div>
+            <div>
+              <h3 className='font-semibold text-darkColor mb-4'>Quick Links</h3>
+              <div className='flex flex-col gap-3'>
+                {quicklLinksData?.map((item)=>(
+                  <Link key={item?.title} href={item?.href} className='text-gray-600 hover:text-darkColor text-sm font-medium hoverEffect'>
+                  {item?.title}
+                  </Link>
+                ))}
+              </div>
+            </div>
+            <div>
+            <h3 className='font-semibold text-darkColor mb-4'>Categories</h3>
+              <div className='flex flex-col gap-3'>
+                {categoriesData?.map((item)=>(
+                  <Link key={item?.title} href={`/categoty${item?.href}`} className='text-gray-600 hover:text-darkColor text-sm font-medium hoverEffect'>
+                  {item?.title}
+                  </Link>
+                ))}
+              </div>
+            </div>
             <div>
               <h3 className='font-semibold text-darkColor mb-4'>Newsletter</h3>
               <p className='text-gray-600 text-sm mb-4'>Subscribe to our newsletter to recieve updates and exclusive offers.</p>
