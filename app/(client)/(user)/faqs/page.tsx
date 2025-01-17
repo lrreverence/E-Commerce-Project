@@ -7,4 +7,4 @@ const FaqsPage = () => {
   )
 }
 
-export default Faqspage
+export default FaqsPage
