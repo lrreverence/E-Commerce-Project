@@ -14,12 +14,10 @@ const SingleProductPage = async({params}:{
   }
 
   return (
-    <div>
-        <Container>
+        <Container className='py-10 flex flex-col md:flex-row gap-10'>
           {product?.images && <ImageView images={product?.images}/>}
-          <div>Right</div>
+          <div className='w-full md:w-1/2 flex flex-col gap-5'>Right</div>
         </Container>
-    </div>
   )
 }
 
