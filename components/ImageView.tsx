@@ -33,6 +33,18 @@ const ImageView = ({images = []}: Props) => {
           />
         </motion.div>
       </AnimatePresence>
+      <div>
+        {images?.map((image)=>(
+          <button key={image?._key}>
+            <Image src={urlFor(image).url()}
+            alt='productImage'
+            width={100}
+            height={100}
+            className='w-full h-auto object contain'
+            />
+          </button>
+        ))}
+      </div>
     </div>
   )
 }
