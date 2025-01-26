@@ -53,9 +53,10 @@ const SingleProductPage = async({params}:{
               <p>Share</p>
             </div>
           </div>
-          <div>
-            <div>
+          <div className='flex flex-wrap items-center gap-5'>
+            <div className='border border-darkBlue/20 text-center p-3 hover:border-darkBlue'>
               <p>Free Shipping</p>
+              <p>Free shipping over order ₱60</p>
             </div>
           </div>
           </div>
