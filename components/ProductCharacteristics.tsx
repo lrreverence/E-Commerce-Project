@@ -1,9 +1,10 @@
+import { Product } from '@/sanity.types'
 import React from 'react'
 
-const ProductCharacteristics = () => {
+const ProductCharacteristics = ({product}:{product:Product}) => {
   return (
     <div>
-      
+      product char
     </div>
   )
 }
