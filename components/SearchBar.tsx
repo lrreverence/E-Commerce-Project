@@ -1,8 +1,9 @@
 "use client"
 import { Search, X } from 'lucide-react'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from './ui/dialog'
 import { Input } from './ui/input'
+import { client } from '@/sanity/lib/client'
 
 const SearchBar = () => {
   const [search, setSearch] = useState("");
@@ -16,13 +17,23 @@ const SearchBar = () => {
     }
     setLoading(true)
     try {
-      const query = `*[_type == "product" && ]`
+      const query = `*[_type == "product" && name match $search] | order(name asc)`;
+      const params={search:`${search}*`}
+      const response = await client.fetch(query,params);
+      setProducts(response);
     } catch (error) {
       console.error('Error Fetching products:',error)
     }finally{
       setLoading(false);
     }
-  },[])
+  },[search])
+
+  useEffect(() => {
+    const debounceTimer = setTimeout(()=>{
+      fetchProducts();
+    },300)
+    return()=>clearTimeout(debounceTimer)
+  },[search,fetchProducts]);
   return (
     <Dialog open={showSearch} onOpenChange={() => setShowSearch(!showSearch)}>
       <DialogTrigger onClick={() => setShowSearch(!showSearch)}>
@@ -45,7 +56,11 @@ const SearchBar = () => {
           </form>
         </DialogHeader>
         <div className='w-full h-full overflow-y-scroll border border-darkColor/20 rounded-md '>
-          <p>Searching on progress</p>
+          <div>
+            {loading ? <p>Searching in progress...</p>:products.length ? <div>Products available</div>:<div className='text-center py-10 font-semibold tracking-wide'>
+              {search && products?.length ? <p>No match</p>:<p className='text-green-600 flex items-center justify-center gap-1'><Search className='w-5 h-5'/>Search and explore your products from Vulos.</p>}
+              </div>}
+          </div>
         </div>
       </DialogContent>
     </Dialog>
