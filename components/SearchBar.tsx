@@ -87,7 +87,7 @@ const SearchBar = () => {
               </div>
             ))
           ):<div className='text-center py-10 font-semibold tracking-wide'>
-              {search ? <p>Nothing matches the keyword <span className='underline text-red-600'>{search}</span>. Please try something else.</p>:<p className='text-green-600 flex items-center justify-center gap-1'><Search className='w-5 h-5'/>Search and explore your products from Vulos.</p>}
+              {search && !loading ? <p>Nothing matches the keyword <span className='underline text-red-600'>{search}</span>. Please try something else.</p>:<p className='text-green-600 flex items-center justify-center gap-1'><Search className='w-5 h-5'/>Search and explore your products from Vulos.</p>}
               </div>}
           </div>
         </div>
