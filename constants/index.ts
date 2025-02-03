@@ -33,3 +33,26 @@ export const categoriesData = [
     {title:'Household', href:'/household'},
     {title:'Others', href:'/others'},
 ];
+
+export const faqsData = [
+    {
+        question: 'What services does Vulos offer?',
+        answer: 'Vulos provides a range of digital solutions, including secure messaging, cloud storage, and AI-driven business tools to enhance productivity and collaboration.'
+    },
+    {
+        question: 'Is Vulos secure?',
+        answer: 'Yes, Vulos employs end-to-end encryption and advanced security protocols to ensure your data and communications remain private and protected.'
+    },
+    {
+        question: 'Does Vulos offer customer support?',
+        answer: 'Absolutely! Vulos provides 24/7 customer support through live chat, email, and phone to assist you with any inquiries or issues.'
+    },
+    {
+        question: 'What pricing plans does Vulos offer?',
+        answer: 'Vulos offers a variety of pricing plans, including a free tier with basic features and premium plans with advanced functionalities tailored for businesses of all sizes.'
+    },
+    {
+        question: 'How can I sign up for Vulos?',
+        answer: 'You can sign up for Vulos by visiting our website, selecting a plan that suits your needs, and following the registration process to create your account.'
+    }
+];
