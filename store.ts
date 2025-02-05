@@ -15,8 +15,8 @@ interface CartState{
     resetCart: ()=>void;
     getTotalPrice:()=>number;
     getSubtotalPrice:() => number;
-    // getItemCount: (productId: string) => number;
-    // getGroupedItems: () => CartItem[];
+    getItemCount: (productId: string) => number;
+    getGroupedItems: () => CartItem[];
 }
 
 const useCartStore = create<CartState>() (persist((set, get) => ({
@@ -33,7 +33,8 @@ const useCartStore = create<CartState>() (persist((set, get) => ({
             return {items:[...state.items,{product,quantity:1}]}
         }
     }),
-    removeItem:(productId)=>set((state)=>{
+    removeItem:(productId)=>
+        set((state)=>({
         items:state.items.reduce((acc,item)=>{
             if(item.product._id === productId){
                 if(item.quantity > 1){
@@ -44,7 +45,7 @@ const useCartStore = create<CartState>() (persist((set, get) => ({
             }
             return acc;
         }, [] as CartItem[]),
-    }),
+    })),
     deleteCartProduct:(productId)=>set((state)=>({
         items:state.items.filter(({product})=>product?._id !== productId
     )
@@ -62,6 +63,13 @@ const useCartStore = create<CartState>() (persist((set, get) => ({
             const discountedPrice = price + discount;
             return total + discountedPrice * item.quantity;
         }, 0)
-    }
+    },
+    getItemCount:(productId)=>{
+        const item = get().items.find((item)=> item.product._id === productId);
+        return item ? item.quantity : 0;
+    },
+    getGroupedItems: () => get().items,
 }),{name:"cart-store"})
 );
+
+export default useCartStore;

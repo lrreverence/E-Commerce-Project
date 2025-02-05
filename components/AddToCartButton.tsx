@@ -4,6 +4,8 @@ import { Button } from './ui/button';
 import { cn } from '@/lib/utils';
 import QuantityButtons from './QuantityButtons';
 import PriceFormatter from './PriceFormatter';
+import useCartStore from '@/store';
+import toast from "react-hot-toast";
 
 interface Props {
     product: Product;
@@ -11,10 +13,11 @@ interface Props {
 }
 
 const AddToCartButton = ({product, className}: Props) => {
+    const { addItem, getItemCount } = useCartStore();
     const isOutOfStock = product?.stock === 0;
-    const itemCount = 0;
+    const itemCount = getItemCount(product?._id);
   return (
-    <div className='w-full'>
+    <div className='w-full h-12 flex items-center'>
       {itemCount ? 
       <div className='w-full text-sm'>
         <div className='flex items-center justify-between'>
@@ -26,7 +29,12 @@ const AddToCartButton = ({product, className}: Props) => {
           <PriceFormatter amount={product?.price ? product ?.price *itemCount : 0}/>
         </div>
       </div> :
-       <Button disabled={isOutOfStock} className={
+       <Button 
+       onClick={()=>{
+        addItem(product);
+        toast.success(`${product?.name?.substring(0,12)}... added successfully!`)
+       }}
+       disabled={isOutOfStock} className={
         cn("w-full bg-transparent text-darkColor shadow-none border border-darkColor/30font-semibold tracking-wide hover:text-white hoverEffect",className)}>Add to cart</Button>}
     </div>
   )
