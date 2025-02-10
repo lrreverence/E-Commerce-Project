@@ -1,6 +1,6 @@
 'use client';
 import { CATEGORIES_QUERYResult } from '@/sanity.types'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button } from './ui/button';
 import { client } from '@/sanity/lib/client';
 interface Props {
@@ -24,6 +24,10 @@ const CategoryProducts = ({categories,slug}:Props) => {
             setLoading(false);
         }
     }
+  
+  useEffect(() =>{
+    fetchProducts(currentSlug);
+  },[currentSlug]);
   return (
     <div className='py-5 flex flex-col md:flex-row items-start gap-5'>
       <div className='flex flex-col md:min-w-40 border'>
