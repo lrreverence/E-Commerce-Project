@@ -18,12 +18,17 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import paypalLogo from "@/images/paypalLogo.png";
+import {
+  createCheckoutSession,
+  Metadata,
+} from "@/actions/createCheckoutSession";
 
 const CartPage = () => {
   const [isClient, setIsClient] = useState(false);
   const {isSignedIn}=useAuth();
+  const [loading, setLoading] = useState(false);
   const {deleteCartProduct, getTotalPrice, getItemCount, getSubtotalPrice, resetCart,getGroupedItems,}=useCartStore();
-  const user = useUser();
+  const {user} = useUser();
   useEffect(() => {
     setIsClient(true);
   }, []);
@@ -40,7 +45,25 @@ const CartPage = () => {
       toast.success("Your cart reset successfully!");
     }
   };
-
+  const handleCheckout = async () => {
+    setLoading(true);
+    try {
+      const metadata: Metadata = {
+        orderNumber: crypto.randomUUID(),
+        customerName: user?.fullName ?? "Unknown",
+        customerEmail: user?.emailAddresses[0]?.emailAddress ?? "Unknown",
+        clerkUserId: user!.id,
+      };
+      const checkoutUrl = await createCheckoutSession(cartProducts, metadata);
+      if (checkoutUrl) {
+        window.location.href = checkoutUrl;
+      }
+    } catch (error) {
+      console.error("Error creating checkout session:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
   const handleDeleteProduct = (id: string) => {
     deleteCartProduct(id);
     toast.success("Product deleted successfully!");
@@ -154,6 +177,7 @@ const CartPage = () => {
                         />
                       </div>
                       <Button
+                      onClick={handleCheckout}
                         className="w-full rounded-full font-semibold tracking-wide"
                         size="lg"
                       >
@@ -173,7 +197,51 @@ const CartPage = () => {
           </div>
     </div>
     {/* Order summary for mobile view */}
-      </div>
+    <div className="md:hidden fixed bottom-0 left-0 w-full bg-white pt-2">
+                  <div className="p-4 rounded-lg border mx-4">
+                    <h2 className="text-xl font-semibold mb-4">
+                      Order Summary
+                    </h2>
+                    <div className="space-y-4">
+                      <div className="flex justify-between">
+                        <span>Subtotal</span>
+                        <PriceFormatter amount={getSubtotalPrice()} />
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Discount</span>
+                        <PriceFormatter
+                          amount={getSubtotalPrice() - getTotalPrice()}
+                        />
+                      </div>
+                      <Separator />
+                      <div className="flex justify-between">
+                        <span>Total</span>
+                        <PriceFormatter
+                          amount={getTotalPrice()}
+                          className="text-lg font-bold text-black"
+                        />
+                      </div>
+                      <Button
+                        onClick={handleCheckout}
+                        className="w-full rounded-full font-semibold tracking-wide"
+                        size="lg"
+                      >
+                        Proceed to Checkout
+                      </Button>
+                      <Link
+                        href={"/"}
+                        className="flex items-center justify-center py-2 border border-darkColor/50 rounded-full hover:border-darkColor hover:bg-darkColor/5 hoverEffect"
+                      >
+                        <Image
+                          src={paypalLogo}
+                          alt="paypalLogo"
+                          className="w-20"
+                        />
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
     </>
       :(<EmptyCart />)}
   </Container>:
