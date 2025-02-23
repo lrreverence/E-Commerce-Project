@@ -1,5 +1,5 @@
 import Container from "@/components/Container";
-// import OrdersComponent from "@/components/OrdersComponent";
+import OrdersComponent from "@/components/OrdersComponent";
 import Title from "@/components/Title";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -44,7 +44,7 @@ const OrdersPage = async () => {
                     </TableHead>
                   </TableRow>
                 </TableHeader>
-                {/* <OrdersComponent orders={orders} /> */}
+                <OrdersComponent orders={orders} />
                 <ScrollBar orientation="horizontal" />
               </Table>
             </ScrollArea>
