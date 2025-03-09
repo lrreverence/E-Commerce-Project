@@ -177,6 +177,7 @@ const CartPage = () => {
                         />
                       </div>
                       <Button
+                      disabled={loading}
                       onClick={handleCheckout}
                         className="w-full rounded-full font-semibold tracking-wide"
                         size="lg"
