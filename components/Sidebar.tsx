@@ -5,7 +5,6 @@ import { X } from 'lucide-react';
 import { headerData } from '@/constants';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { on } from 'events';
 import SocialMedia from './SocialMedia';
 import { useOutsideClick } from '@/hooks/useOutsideClick';
 
